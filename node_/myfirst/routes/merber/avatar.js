@@ -16,11 +16,11 @@ var Busboy = require('busboy');
 // 使用 async 异步流程依赖模块；
 router.post('/merber/avatar', async (ctx, next) => {
   // 上传文件请求处理
-        let serverFilePath = path.join( __dirname, '../../public/upload/avatar' )
+        let serverFilePath = path.join( __dirname, '../../public/upload/avatar' );
       //   // 上传文件事件
       let result = {};
       let dbupdate = {};
-      try {
+  try {
         result = await uploadFile( ctx, {
           fileName: '',
           path: serverFilePath,
@@ -31,7 +31,7 @@ router.post('/merber/avatar', async (ctx, next) => {
             username: result.username
           }
           var obj = {
-            avatar: result.url
+            avatar: result.url + Math.random()*10
           }
           dbupdate = update(condition, obj);
             ctx.body = result;

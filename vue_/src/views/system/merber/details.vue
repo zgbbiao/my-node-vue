@@ -15,7 +15,7 @@
                                 v-model="avatar.show"
                                 :width="100"
                                 :height="100"
-                                url="http://127.0.0.1:3000/merber/avatar"
+                                url="http://127.0.0.1/merber/avatar"
                                 :noSquare='true'
                                 :noRotate='false'
                                 :params="avatar.params"
@@ -192,6 +192,15 @@ export default {
                 console.log(this.$store.state);
                 var userinfo = this.$store.state.user.userinfo;
                 this.editForm.avatar = jsonData.url;
+//                this.$Store.state.user.userinfo.avatar = jsonData.url;
+            var _userinfo = Object.create(this.$store.state.user.userinfo);
+            _userinfo.avatar = jsonData.url;
+            this.$store.commit('SET_USERINFO', _userinfo);
+                try {
+                    this.$forceUpdate();
+                }catch (err){
+                    console.log(err);
+                }
                 userinfo.avatar = jsonData.url;
                 console.log(userinfo);
                 // this.$store.commit('SET_USERINFO', Object.assign(userinfo));

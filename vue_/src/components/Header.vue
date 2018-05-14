@@ -134,7 +134,9 @@ export default {
   },
   computed: mapState({
     avatar: state =>  {
-      return state.user.userinfo.avatar;
+        console.log('state.user.userinfo.avatar');
+        console.log(state.user.userinfo.avatar);
+        return state.user.userinfo.avatar;
     },
     username: state =>  {
       return state.user.userinfo.username;

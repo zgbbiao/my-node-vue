@@ -28,7 +28,8 @@ module.exports = merge(baseWebpackConfig, {
         // 由utils配置出各种类型的预处理语言所需要使用的loader，例如sass需要使用sass-loader
         rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap})
     },
-    
+	// 例如当你设置 target:'node' 时，源代码中导入 Node.js 原生模块的语句 require('fs') 将会被保留，fs 模块的内容不会打包进 Chunk 里。
+    // target : "web"
     // cheap-source-map is faster for development
     // 使用这种source-map更快
     devtool: '#cheap-source-map',
@@ -56,5 +57,25 @@ module.exports = merge(baseWebpackConfig, {
             path:config.dev.staticPath
         }),
         new FriendlyErrorsPlugin()
-    ]
+    ],
+	watch: true,
+		// 监听模式运行时的参数
+	  // 在开启监听模式时，才有意义
+	  watchOptions: {
+		// 不监听的文件或文件夹，支持正则匹配
+		// 默认为空
+		ignored: /node_modules/,
+		// 监听到变化发生后会等300ms再去执行动作，防止文件更新太快导致重新编译频率太高
+		// 默认为 300ms  
+		aggregateTimeout: 300,
+		// 判断文件是否发生变化是通过不停的去询问系统指定文件有没有变化实现的
+		// 默认每秒问 1000 次
+		poll: 1000
+	  },
+	  // 通过 externals 可以告诉 Webpack JavaScript 运行环境已经内置了那些全局变量，针对这些全局变量不用打包进代码中而是直接使用全局变量。
+	  externals: {
+		// 把导入语句里的 jquery 替换成运行环境里的全局变量 jQuery
+		jquery: 'jQuery'
+	  }
+	
 })

@@ -42,8 +42,7 @@ const  uploadFile = (ctx, options) => {
     let req = ctx.req;
     let res = ctx.res;
     var busboy = new Busboy({ headers: req.headers });
-    console.log(ctx)
-    
+
     let ofileName = options.fileName;
     let opath = options.path;
     let saveFile = '';
@@ -61,6 +60,7 @@ const  uploadFile = (ctx, options) => {
     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
       if (fieldname) {
           console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+          filename = Math.random() + filename;
           saveFile = path.join(opath, filename);
           file.on('data', function(data) {
             console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
@@ -81,7 +81,7 @@ const  uploadFile = (ctx, options) => {
                     urlPath = path.join(urlPath, item);
                 }
             })
-            urlPath = path.join( `${ctx.host}` , urlPath, ofileName);
+            urlPath = path.join( `${ctx.host}` , urlPath,   ofileName);
             urlPath = urlPath.split('\\').join('/');
             urlPath = `${ctx.protocol}://${urlPath}`;
             result = {
